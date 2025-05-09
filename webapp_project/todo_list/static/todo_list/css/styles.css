@@ -1,0 +1,138 @@
+/* General Styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  footer {
+    margin-top: auto;
+  }
+  
+  /* Task Cards */
+  .task-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 4px solid #0d6efd;
+  }
+  
+  .task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-card.priority-high {
+    border-left-color: #dc3545;
+  }
+  
+  .task-card.priority-medium {
+    border-left-color: #fd7e14;
+  }
+  
+  .task-card.priority-low {
+    border-left-color: #198754;
+  }
+  
+  /* Kanban Board */
+  .kanban-column {
+    min-height: 500px;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+  }
+  
+  .kanban-tasks {
+    min-height: 400px;
+  }
+  
+  /* Progress Bar */
+  .progress {
+    height: 20px;
+    margin-bottom: 1rem;
+  }
+  
+  /* Dark Mode Adjustments */
+  [data-bs-theme="dark"] .card {
+    background-color: #2b3035;
+    border-color: #495057;
+  }
+  
+  [data-bs-theme="dark"] .kanban-column {
+    background-color: #343a40;
+  }
+  
+  /* Quick Add Button */
+  .quick-add-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1030;
+  }
+  
+  /* Dark Mode Toggle */
+  .dark-mode-toggle {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1030;
+  }
+  
+  /* Tags and Labels */
+  .task-tag {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: inline-block;
+    border-radius: 1rem;
+  }
+  
+  /* Task Form */
+  .rich-text-editor {
+    min-height: 200px;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+  }
+  
+  /* Calendar View */
+  .fc-event {
+    cursor: pointer;
+  }
+  
+  /* Animation for completed tasks */
+  .task-complete-animation {
+    animation: taskComplete 0.5s ease-in-out;
+  }
+  
+  @keyframes taskComplete {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  
+  /* Additional Responsive Adjustments */
+  @media (max-width: 768px) {
+    .kanban-column {
+      margin-bottom: 1rem;
+    }
+    
+    .task-action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .task-action-buttons .btn {
+      margin-bottom: 0.5rem;
+    }
+  }
