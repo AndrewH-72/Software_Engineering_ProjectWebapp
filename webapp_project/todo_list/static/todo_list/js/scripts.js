@@ -77,4 +77,110 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     }
-  });
+    
+    // Add data-old-status attribute to the select elements to track status changes
+    document.querySelectorAll('.status-select').forEach(select => {
+      select.setAttribute('data-old-status', select.value);
+    });
+    
+    // Add event listener to custom status input
+    const customInputs = document.querySelectorAll('.custom-status-input');
+    customInputs.forEach(input => {
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          // Set the select to "custom" before submitting to ensure proper status
+          const selectElement = this.form.querySelector('select');
+          selectElement.value = 'custom';
+          this.form.submit();
+        }
+      });
+      input.addEventListener('blur', function() {
+        if (this.value.trim() !== '') {
+          // Set the select to "custom" before submitting to ensure proper status
+          const selectElement = this.form.querySelector('select');
+          selectElement.value = 'custom';
+          this.form.submit();
+        }
+      });
+    });
+
+});
+
+//status updates ! dropdown
+
+function toggleCustomField(selectElement) {
+    console.log('Toggle function called with status:', selectElement.value);
+    
+    const form = selectElement.form;
+    const customInput = form.querySelector('.custom-status-input');
+    const isNewCustomInput = form.querySelector('[id^="is-new-custom-"]');
+    const oldStatus = selectElement.getAttribute('data-old-status');
+    
+    // Update select element class based on selected value
+    selectElement.className = 'form-select form-select-sm status-select';
+    
+    // Add appropriate class based on selection
+    if (selectElement.value === 'not_started') {
+        selectElement.classList.add('status-not-started');
+        customInput.style.display = 'none';
+        isNewCustomInput.value = '0';
+        form.submit();
+    } else if (selectElement.value === 'in_progress') {
+        selectElement.classList.add('status-in-progress');
+        customInput.style.display = 'none';
+        isNewCustomInput.value = '0';
+        form.submit();
+    } else if (selectElement.value === 'completed') {
+        selectElement.classList.add('status-completed');
+        customInput.style.display = 'none';
+        isNewCustomInput.value = '0';
+        
+        // Check if this is a transition to completed
+        if (oldStatus !== 'completed') {
+          // Add animation class for visual feedback
+          const row = selectElement.closest('tr');
+          row.classList.add('task-complete-animation');
+          
+          // Trigger confetti!
+          console.log('Status is completed and changed from', oldStatus, 'triggering confetti');
+          try {
+            window.triggerConfetti(); // Use the global function
+          } catch (e) {
+            console.error('Error with confetti:', e);
+          }
+        }
+        
+        form.submit();
+    } else if (selectElement.value === 'custom') {
+        selectElement.classList.add('status-custom');
+        
+        // Show the custom input field for editing or entering a new value
+        customInput.style.display = 'block';
+        customInput.focus();
+        
+        // Check if we're editing an existing custom status or creating a new one
+        if (oldStatus === 'custom') {
+            // We're editing an existing custom status
+            isNewCustomInput.value = '0';
+            // Don't submit the form yet - let the user edit the value
+        } else {
+            // This is a new custom status
+            isNewCustomInput.value = '1';
+            // Don't submit yet, let user enter the value
+        }
+        
+        // Don't submit the form automatically - wait for the user to enter text
+        return false;
+    }
+}
+
+function triggerConfetti() {
+    console.log('Confetti function called');
+    // Simple confetti test
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+}
+

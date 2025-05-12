@@ -2,15 +2,15 @@
 {% load static %}
 {% load form_tags %}
 
-{% block title %}Log In{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h2 class="fs-4 mb-0">Log In</h2>
+                <div class="card-header bg-success text-white">
+                    <h2 class="fs-4 mb-0">Register</h2>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST">
@@ -22,6 +22,9 @@
                                         {{ field.label }}:
                                     </label>
                                     {{ field|addclass:"form-control" }}
+                                    {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
                                     {% if field.errors %}
                                         {% for error in field.errors %}
                                             <div class="alert alert-danger mt-1">{{ error }}</div>
@@ -31,12 +34,12 @@
                             {% endfor %}
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" type="submit">Log In</button>
+                            <button class="btn btn-success" type="submit">Sign Up</button>
                         </div>
                     </form>
                     <div class="border-top pt-3 mt-4 text-center">
                         <small class="text-muted">
-                            Need an account? <a href="{% url 'register' %}">Sign Up</a>
+                            Already have an account? <a href="{% url 'login' %}">Log In</a>
                         </small>
                     </div>
                 </div>

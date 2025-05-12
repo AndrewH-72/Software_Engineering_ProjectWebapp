@@ -1,10 +1,12 @@
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from todo_list import views as todo_views
 
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('todo_list.urls')),
+    path('register/', todo_views.register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='todo_list/login.html'), name='login'),
+    path('logout/', todo_views.logout_view, name='logout'),
+]
