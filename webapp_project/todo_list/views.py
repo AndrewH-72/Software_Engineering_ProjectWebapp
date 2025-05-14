@@ -14,7 +14,7 @@ from django.http import HttpResponseRedirect
 
 from .models import Task,TaskGroup
 from .forms import UserRegisterForm, TaskUserForm, TaskAdminForm
-# Create your views here.
+
 def logout_view(request):
     logout(request)
     return redirect('login')
