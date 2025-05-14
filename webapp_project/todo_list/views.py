@@ -30,7 +30,7 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'todo_list/register.html', {'form': form})
 
-# In views.py - TaskList view
+
 class TaskList(ListView):
     model = Task
     context_object_name = 'tasks'
@@ -45,13 +45,13 @@ class TaskList(ListView):
             else:
                 tasks = Task.objects.all()
         else:
-            # reg users view
+            #regular users view
             tasks = Task.objects.filter(user=self.request.user)
         
-        # Use a timezone-aware datetime.max replacement
+        # Use a timezone aware datetime.max replacement
         max_date = timezone.make_aware(datetime.max.replace(year=9999, month=12, day=31))
         
-        # order tasks by completion
+        #order tasks by completion
         return sorted(tasks, key=lambda t: (1 if t.status == 'completed' else 0, t.duedate or max_date))
     
     def get_context_data(self, **kwargs):
@@ -60,7 +60,7 @@ class TaskList(ListView):
         if self.request.user.is_superuser:
             context['users'] = User.objects.all()
         
-        # Add task groups to context
+        # add task groups to context
         context['task_groups'] = TaskGroup.objects.filter(user=self.request.user)
         
         if 'task_completed' in self.request.session:
@@ -76,7 +76,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     template_name = 'todo_list/task.html'
     
     def get_queryset(self):
-        # Superusers can view any task, regular users only their own
+        #superusers/admin can view any task, regular users only their own
         if self.request.user.is_superuser:
             return Task.objects.all()
         else:
@@ -87,14 +87,14 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('tasks')
     
     def get_form_class(self):
-        # Superusers can select which user to assign the task to
+        #superusers/admin can select which user to assign the task to
         if self.request.user.is_superuser:
-            return TaskAdminForm  # We'll create this form
+            return TaskAdminForm 
         else:
-            return TaskUserForm  # We'll create this form too
+            return TaskUserForm 
     
     def form_valid(self, form):
-        # If not a superuser, automatically assign the task to the current user
+        #if not a superuser, automatically assign the task to the current user
         if not self.request.user.is_superuser:
             form.instance.user = self.request.user
         return super().form_valid(form)
@@ -110,7 +110,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
             return TaskUserForm
     
     def get_queryset(self):
-        # Superusers can edit any task, regular users only their own
+        # superusers can edit any task, regular users only their own
         if self.request.user.is_superuser:
             return Task.objects.all()
         else:
@@ -121,7 +121,7 @@ def update_task_status(request, pk):
         try:
             task = Task.objects.get(pk=pk)
             
-            # Check if user is allowed to update this task
+            #checks if user is allowed to update this task
             if request.user.is_superuser or task.user == request.user:
                 old_status = task.status
                 new_status = request.POST.get('status')
@@ -129,7 +129,7 @@ def update_task_status(request, pk):
                 print(f"Update task status: Task {pk}, Old status: {old_status}, New status: {new_status}")
                 print(f"POST data: {request.POST}")
                 
-                # Handle the case for custom status
+                #custom_status
                 if new_status == 'custom':
                     custom_status = request.POST.get('custom_status', '').strip()
                     is_new_custom = request.POST.get('is_new_custom') == '1'
@@ -141,16 +141,16 @@ def update_task_status(request, pk):
                         task.custom_status = custom_status
                         print(f"Setting custom status to: {custom_status}")
                     else:
-                        # If no custom status provided, don't change anything
+                        #if there is no custom status, don't change anything
                         print("No custom status provided, not changing")
                         return HttpResponseRedirect(reverse('tasks'))
                 else:
-                    # Regular status update
+                    #normal status update
                     task.status = new_status
                     if new_status != 'custom':
                         task.custom_status = ''
                 
-                # Check if this is a transition to completed
+                #is the transition completed?
                 if old_status != 'completed' and new_status == 'completed':
                     request.session['task_completed'] = task.id
                         
@@ -168,7 +168,7 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('tasks')
     
     def get_queryset(self):
-        # Superusers can delete any task, regular users only their own
+        #superusers can delete any task, regular users only their own
         if self.request.user.is_superuser:
             return Task.objects.all()
         else:
@@ -229,7 +229,7 @@ def add_tasks_to_group(request):
                     try:
                         task = Task.objects.get(id=task_id)
                         print(f"Found task: {task}")
-                        # Check if user is allowed to access this task
+                        # is the user allowed to access the task?
                         if request.user.is_superuser or task.user == request.user:
                             group.tasks.add(task)
                             print(f"Added task {task_id} to group")
