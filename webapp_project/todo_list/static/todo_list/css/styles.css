@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     min-height: 100vh;
     display: flex;
@@ -13,7 +12,7 @@ body {
     margin-top: auto;
   }
   
-  /* Task Cards */
+  
   .task-card {
     cursor: pointer;
     transition: all 0.2s ease;
@@ -37,7 +36,6 @@ body {
     border-left-color: #198754;
   }
   
-  /* Kanban Board */
   .kanban-column {
     min-height: 500px;
     background-color: #f8f9fa;
@@ -48,13 +46,13 @@ body {
     min-height: 400px;
   }
   
-  /* Progress Bar */
+  /* progress bar */
   .progress {
     height: 20px;
     margin-bottom: 1rem;
   }
   
-  /* Status badges */
+  /* status badges */
 .badge.bg-secondary {
     background-color: #bd2929 !important;
   }
@@ -73,7 +71,7 @@ body {
     color: #000;
   }
 
-/* Status dropdown styling */
+/* dropdown menu for status styling */
 .status-update-form select {
     min-width: 120px;
     border: 2px solid transparent;
@@ -81,7 +79,7 @@ body {
     font-weight: 500;
   }
   
-  /* Style for each status value */
+  /* style for each status */
   .status-not-started {
     background-color: #bd2929 !important;
     color: white !important;
@@ -102,13 +100,13 @@ body {
     color: black !important;
   }
   
-  /* Custom status input styling */
+  /*pretty status input styling */
   .custom-status-input {
     border: 2px solid #5ba2e5;
     border-radius: 0.25rem;
   }
   
-  /* Style options in the dropdown based on status to match your badge colors */
+  /* colors match the status youc choose */
   .status-update-form select option[value="not_started"] {
     background-color: #bd2929;
     color: white;
@@ -116,7 +114,7 @@ body {
   
   .status-update-form select option[value="in_progress"] {
     background-color: #f2f546;
-    color: black;  /* Changed to black for better contrast with yellow */
+    color: black;  /* changed to black for better contrast with yellow */
   }
   
   .status-update-form select option[value="completed"] {
@@ -129,12 +127,12 @@ body {
     color: black;
   }
   
-  /* Status update form */
+ 
   .status-update-form select {
     min-width: 120px;
   }
   
-  /* Dark Mode Adjustments */
+  /*dark mode stuff */
   [data-bs-theme="dark"] .card {
     background-color: #2b3035;
     border-color: #495057;
@@ -144,7 +142,7 @@ body {
     background-color: #343a40;
   }
   
-  /* Quick Add Button */
+ 
   .quick-add-btn {
     position: fixed;
     bottom: 30px;
@@ -160,7 +158,7 @@ body {
     z-index: 1030;
   }
   
-  /* Dark Mode Toggle */
+ 
   .dark-mode-toggle {
     position: fixed;
     top: 70px;
@@ -168,7 +166,7 @@ body {
     z-index: 1030;
   }
   
-  /* Tags and Labels */
+ 
   .task-tag {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
@@ -178,19 +176,19 @@ body {
     border-radius: 1rem;
   }
   
-  /* Task Form */
+ 
   .rich-text-editor {
     min-height: 200px;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
   }
   
-  /* Calendar View */
+  /* calendar*/
   .fc-event {
     cursor: pointer;
   }
   
-  /* Animation for completed tasks */
+  /* animation for completed tasks */
   .task-complete-animation {
     animation: taskComplete 0.5s ease-in-out;
   }
@@ -201,7 +199,7 @@ body {
     100% { opacity: 1; transform: scale(1); }
   }
   
-  /* Additional Responsive Adjustments */
+  /* extra stuff */
   @media (max-width: 768px) {
     .kanban-column {
       margin-bottom: 1rem;
