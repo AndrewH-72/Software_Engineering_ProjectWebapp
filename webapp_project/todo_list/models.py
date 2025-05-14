@@ -20,7 +20,7 @@ class Task(models.Model):
     created = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
-        # Update complete field based on status for backward compatibility
+        # update complete field
         self.complete = (self.status == 'completed')
         super().save(*args, **kwargs)
 
@@ -28,7 +28,7 @@ class Task(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['status', 'duedate']  # Show incomplete tasks first, then by due date
+        ordering = ['status', 'duedate']  #show incomplete tasks first, then by due date
 
 #creating the task group model !!
 class TaskGroup(models.Model):
