@@ -16,7 +16,7 @@
           <form method="POST" action="">
             {% csrf_token %}
             
-            <!-- Title field -->
+            <!-- title -->
             <div class="form-group mb-3">
               <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">
                 {{ form.title.label }}:
@@ -29,7 +29,7 @@
               {% endif %}
             </div>
             
-            <!-- Description field -->
+            <!-- decription -->
             <div class="form-group mb-3">
               <label for="{{ form.description.id_for_label }}" class="form-label fw-bold">
                 {{ form.description.label }}:
@@ -42,7 +42,7 @@
               {% endif %}
             </div>
             
-            <!-- Status field -->
+            <!-- status -->
             <div class="form-group mb-3">
               <label for="{{ form.status.id_for_label }}" class="form-label fw-bold">
                 Status:
@@ -55,7 +55,7 @@
               {% endif %}
             </div>
             
-            <!-- Custom Status field (initially hidden) -->
+            <!-- custom status -->
             <div class="form-group mb-3" id="custom-status-group" style="display: {% if form.instance.status == 'custom' %}block{% else %}none{% endif %};">
               <label for="{{ form.custom_status.id_for_label }}" class="form-label fw-bold">
                 Custom Status:
@@ -69,7 +69,7 @@
               {% endif %}
             </div>
             
-            <!-- Due Date field -->
+            <!-- due date -->
             <div class="form-group mb-3">
               <label for="{{ form.duedate.id_for_label }}" class="form-label fw-bold">
                 {{ form.duedate.label }}:
@@ -82,7 +82,7 @@
               {% endif %}
             </div>
             
-            <!-- User field (only for superusers) -->
+            <!-- user field (only for superusers) -->
             {% if user.is_superuser %}
             <div class="form-group mb-3">
               <label for="{{ form.user.id_for_label }}" class="form-label fw-bold">
@@ -113,7 +113,7 @@
 </div>
 
 <script>
-  // Function to toggle the custom status field
+  // function to switch the custom status field
   function toggleCustomStatus(status) {
     const customStatusGroup = document.getElementById('custom-status-group');
     const customStatusInput = document.getElementById('{{ form.custom_status.id_for_label }}');
@@ -127,7 +127,7 @@
     }
   }
   
-  // Initialize on page load
+  // laoding page
   document.addEventListener('DOMContentLoaded', function() {
     const statusSelect = document.querySelector('.status-select');
     if (statusSelect) {
