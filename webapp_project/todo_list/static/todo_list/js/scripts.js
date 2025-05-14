@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Dark mode toggle
+    // dark mode switch
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (darkModeToggle) {
       const htmlElement = document.documentElement;
       
-      // Check for saved theme preference
+      // you can save your preferred theme
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
         htmlElement.setAttribute('data-bs-theme', 'dark');
         darkModeToggle.innerHTML = '<i class="bi bi-sun"></i>';
       }
       
-      // Toggle theme
+      // you can switch the theme
       darkModeToggle.addEventListener('click', function() {
         if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
           htmlElement.setAttribute('data-bs-theme', 'light');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
-    // Task completion animation
+    // task completed animation
     const taskCompletionCheckboxes = document.querySelectorAll('.task-completion-checkbox');
     taskCompletionCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('change', function() {
@@ -41,11 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    // Initialize tooltips
+    // initialize tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     
-    // Initialize Rich Text Editor if present
+    // initialize Rich Text Editor if present
     const editorElement = document.getElementById('editor');
     if (editorElement && typeof Quill !== 'undefined') {
       const quill = new Quill('#editor', {
@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // If editing, populate the editor with existing content
+      // if editing, show user previously used stuff
       const descriptionInput = document.getElementById('description-input');
       if (descriptionInput && descriptionInput.value) {
         quill.root.innerHTML = descriptionInput.value;
       }
       
-      // Update hidden input before form submission
+      // update hidden input before form submission
       const taskForm = document.querySelector('form');
       if (taskForm) {
         taskForm.addEventListener('submit', function() {
@@ -78,17 +78,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Add data-old-status attribute to the select elements to track status changes
+    
     document.querySelectorAll('.status-select').forEach(select => {
       select.setAttribute('data-old-status', select.value);
     });
     
-    // Add event listener to custom status input
+    // add event listener to custom status input
     const customInputs = document.querySelectorAll('.custom-status-input');
     customInputs.forEach(input => {
       input.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-          // Set the select to "custom" before submitting to ensure proper status
+          // set the select to "custom" before submitting to ensure proper status
           const selectElement = this.form.querySelector('select');
           selectElement.value = 'custom';
           this.form.submit();
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       input.addEventListener('blur', function() {
         if (this.value.trim() !== '') {
-          // Set the select to "custom" before submitting to ensure proper status
+          // set the select to "custom" before submitting to ensure proper status
           const selectElement = this.form.querySelector('select');
           selectElement.value = 'custom';
           this.form.submit();
@@ -116,10 +116,10 @@ function toggleCustomField(selectElement) {
     const isNewCustomInput = form.querySelector('[id^="is-new-custom-"]');
     const oldStatus = selectElement.getAttribute('data-old-status');
     
-    // Update select element class based on selected value
+    // update select element class based on selected value
     selectElement.className = 'form-select form-select-sm status-select';
     
-    // Add appropriate class based on selection
+    // add appropriate class based on selection
     if (selectElement.value === 'not_started') {
         selectElement.classList.add('status-not-started');
         customInput.style.display = 'none';
@@ -135,16 +135,16 @@ function toggleCustomField(selectElement) {
         customInput.style.display = 'none';
         isNewCustomInput.value = '0';
         
-        // Check if this is a transition to completed
+        // check if this is a transition to completed
         if (oldStatus !== 'completed') {
-          // Add animation class for visual feedback
+          // add animation class to make it look pretty
           const row = selectElement.closest('tr');
           row.classList.add('task-complete-animation');
           
-          // Trigger confetti!
+          // confetti!
           console.log('Status is completed and changed from', oldStatus, 'triggering confetti');
           try {
-            window.triggerConfetti(); // Use the global function
+            window.triggerConfetti(); 
           } catch (e) {
             console.error('Error with confetti:', e);
           }
@@ -154,29 +154,29 @@ function toggleCustomField(selectElement) {
     } else if (selectElement.value === 'custom') {
         selectElement.classList.add('status-custom');
         
-        // Show the custom input field for editing or entering a new value
+        // custom input field for editing or entering a new value
         customInput.style.display = 'block';
         customInput.focus();
         
-        // Check if we're editing an existing custom status or creating a new one
+        // check if we're editing an existing custom status or creating a new one
         if (oldStatus === 'custom') {
             // We're editing an existing custom status
             isNewCustomInput.value = '0';
-            // Don't submit the form yet - let the user edit the value
+            //let the user edit the value
         } else {
-            // This is a new custom status
+            //new custom status
             isNewCustomInput.value = '1';
-            // Don't submit yet, let user enter the value
+            // let user enter the value
         }
         
-        // Don't submit the form automatically - wait for the user to enter text
+        //  wait for the user to enter text
         return false;
     }
 }
 
 function triggerConfetti() {
     console.log('Confetti function called');
-    // Simple confetti test
+    //confetti test
     confetti({
         particleCount: 100,
         spread: 70,
